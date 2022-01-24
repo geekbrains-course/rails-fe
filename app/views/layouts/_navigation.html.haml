@@ -9,7 +9,7 @@
       %button.btn.btn-outline-secondary{:type => "submit"}
         %svg.bi.bi-search{:fill => "currentColor", :height => "16", :viewbox => "0 0 16 16", :width => "16", :xmlns => "http://www.w3.org/2000/svg"}
           %path{:d => "M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"}
-%nav.navbar.navbar-expand-lg.navbar-light.bg-light.px-15
+%nav.navbar.navbar-expand-lg.navbar-light.bg-white.px-15
   .container-fluid
     #navbarSupportedContent.collapse.navbar-collapse
       %ul.navbar-nav.me-auto.mb-2.mb-lg-0
@@ -29,8 +29,11 @@
                 %span Profile
               %ul.dropdown-menu.dropdown-menu--nav-bar{"aria-labelledby" => "navbarDropdown"}
                 %li
-                  %a.dropdown-item{:href => "#"} My profile
-                = link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item"
+                  = link_to 'My profile', profile_path, class: "dropdown-item"
+                %li
+                  = link_to 'Edit profile', edit_profile_path, class: "dropdown-item"
+                %li
+                  = link_to 'User settings', edit_user_registration_path, class: "dropdown-item"
                 %li
                   %hr.dropdown-divider/
                 %li
