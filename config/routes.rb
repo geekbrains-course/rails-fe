@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:edit, :update, :show]
   resources :posts
+  resources :colors, only: [:create]
 end
