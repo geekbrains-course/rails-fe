@@ -6,7 +6,7 @@
   %strong Content:
   = @post.content
 %p
-  %i.fas.fa-heart.like#like
+  %i.fas.fa-heart.like#like{"data-post-id" => "#{@post.id}"}
 
 = link_to 'Edit', edit_post_path(@post)
 = link_to 'Destroy', post_path(@post) , method: :delete, data: { confirm: 'Are you sure?' }

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy like ]
 
   # GET /posts
   def index
@@ -44,6 +44,15 @@ class PostsController < ApplicationController
     @post.destroy
 
     redirect_to posts_url, notice: "Post was successfully destroyed."
+  end
+
+  # POST /posts/1/like
+  def like
+    if @post.like!
+      head :ok
+    else
+      render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   private
