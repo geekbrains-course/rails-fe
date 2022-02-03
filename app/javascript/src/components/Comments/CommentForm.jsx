@@ -22,7 +22,7 @@ class CommentForm extends React.Component {
         <div className="panel-body">
           <form className="form" onSubmit={this.handleSubmit.bind(this)}>
             <input className="form-control" type="text" placeholder="Say somthing here..." ref="text" /><br/>
-            <Button className="btn btn-default" type="submit" > Post </Button>
+            <Button className="btn btn-default" type="submit" > New Comment </Button>
           </form>
         </div>
       </div>

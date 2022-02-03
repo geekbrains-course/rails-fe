@@ -2,11 +2,11 @@ module Api
   module V1
     class CommentsController < ApplicationController
       def index
-        render json: Comment.where(post_id: params[:post_id])
+        @comments = Comment.includes(:comments).post_comments.where(commentable_id: params[:post_id])
       end
 
       def create
-        comment = Comment.new(comment_params)
+        comment = commentable.comments.new(comment_params)
         comment.author = current_user.email
         comment.save
 
@@ -21,6 +21,14 @@ module Api
 
       def comment_params
         params.require(:comment).permit(:text, :post_id)
+      end
+
+      def commentable
+        @commentable ||= if params[:comment_id]
+          Comment.find_by_id(params[:comment_id])
+        elsif params[:post_id]
+          Post.find_by_id(params[:post_id])
+        end
       end
     end
   end

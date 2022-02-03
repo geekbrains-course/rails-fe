@@ -8,7 +8,7 @@ class Comments extends React.Component {
 
   render() {
     let commentNodes = this.props.comments.map((comment, index) => {
-      return (<Comment key={index} author={comment.author}>
+      return (<Comment key={index} author={comment.author} commentId={comment.id} subComments={comment.comments}>
         {comment.text}
       </Comment>);
     });
