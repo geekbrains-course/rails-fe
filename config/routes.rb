@@ -8,6 +8,13 @@ Rails.application.routes.draw do
   resources :posts do
     member do
       post :like
+      get :likes
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :comments,  only: [:index, :show, :create, :destroy]
     end
   end
   resources :colors, only: [:create]
