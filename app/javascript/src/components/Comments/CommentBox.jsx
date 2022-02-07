@@ -1,70 +1,72 @@
 import React from 'react'
 import Comments from './Comments'
 import CommentForm from './CommentForm'
+import { useMutation, useQuery } from 'react-query'
 const token = document.querySelector('meta[name="csrf-token"]').content;
 
-class CommentBox extends React.Component {
-  constructor(props) {
-  	super(props);
-    this.state = { comments: [] };
-  }
+const CommentBox = props => {
+  const [comments, setComments] = React.useState([]);
 
-
-  componentDidMount() {
-    fetch(`${this.props.url}?post_id=${this.props.post_id}`, {
+  const { isLoading, data, error } = useQuery(['comments', props.post_id], () =>
+    fetch(`${props.url}?post_id=${props.post_id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({comments: data});
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+    .then(response => response.json())
+  )
 
-  handleCommentSubmit(newComment) {
-    let comments = this.state.comments;
-    fetch('/api/v1/comments/', {
+  React.useEffect(() => {
+    if (isLoading) {
+      return
+    }
+
+    if (error) {
+      console.log('Error:', error);
+      return
+    }
+
+    setComments(data);
+    console.log('Success:', data);
+  }, [isLoading, data, error]);
+
+  const handleCommentSubmit = (newComment) =>
+    fetch('/api/v1/comments', {
       method: 'POST',
       headers: {
         'X-CSRF-Token': token,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         ...newComment,
-        post_id: this.props.post_id
+        post_id: props.post_id
       })
     })
-      .then(response => response.json())
-      .then((data) => {
-        let newComments = comments.concat([data]);
-        this.setState({ comments : newComments });
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+    .then(response => response.json());
 
-  render() {
-    return (
-      <div className="container">
-        <div className="commentBox panel panel-default">
-          <div className="panel-body">
-            <h1>Comments</h1>
-            <Comments comments={this.state.comments} />
-            <br />
-            <CommentForm onCommentSubmit={this.handleCommentSubmit.bind(this)} />
-          </div>
+  const addComment = useMutation(handleCommentSubmit, {
+    onError: (error) => {
+      console.log('Error:', error);
+    },
+    onSuccess: (data) => {
+      let newComments = comments.concat([data]);
+      setComments(newComments);
+    }
+  })
+
+  return (
+    <div className="container">
+      <div className="commentBox panel panel-default">
+        <div className="panel-body">
+          <h1>Comments</h1>
+          <Comments comments={comments} />
+          <br />
+          <CommentForm onCommentSubmit={addComment.mutate} />
         </div>
       </div>
-    );
-  }
-
+    </div>
+  );
 }
 
 export default CommentBox;
