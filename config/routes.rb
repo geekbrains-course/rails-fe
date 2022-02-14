@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   root 'posts#index'
 
   devise_for :users
@@ -9,6 +10,11 @@ Rails.application.routes.draw do
     member do
       post :like
       get :likes
+    end
+
+    collection do
+      get :search
+      get :autocomplete
     end
   end
 

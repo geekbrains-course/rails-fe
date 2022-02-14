@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.where("title LIKE ?", "%#{params[:q]}%")
   end
 
   # GET /posts/1 or /posts/1.json
@@ -70,6 +70,18 @@ class PostsController < ApplicationController
 
   # GET /posts/1/likes
   def likes
+  end
+
+  # GET /posts/search
+  def search
+    @found_posts = Post.search_scope(params[:q])
+    render layout: false
+  end
+
+  # GET /posts/autocomplete
+  def autocomplete
+    @autocomplete_results = Post.search_scope(params[:q])
+    render layout: false
   end
 
   private

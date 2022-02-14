@@ -10,6 +10,7 @@ import "trix"
 import "@rails/actiontext"
 import "src/profile.js"
 import "src/post.js"
+require("controllers")
 
 Rails.start()
 Turbolinks.start()
