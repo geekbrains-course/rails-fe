@@ -1,9 +1,9 @@
 %p#notice= notice
+
 = render 'search'
-- @posts.each do |post|
-  %div{class: 'container-fluid post'}
-    %div
-      %h2
-        = link_to post.title, post, class: "link-dark", data: { turbolinks: false }
-    %div
-      = post.content
+%hr
+
+%div{'data-controller' => 'sort'}
+  = render 'sort'
+  #index{'data-sort-target' => 'results'}
+    = render 'sorted_collection'

@@ -84,6 +84,12 @@ class PostsController < ApplicationController
     render layout: false
   end
 
+  # GET /posts/sort
+  def sort
+    @posts = Post.all.order(created_at: sort_type)
+    render layout: false
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -93,5 +99,16 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content)
+    end
+
+    def sort_type
+      case params[:type]
+      when 'old'
+        :desc
+      when 'new'
+        :asc
+      else
+        :asc
+      end
     end
 end

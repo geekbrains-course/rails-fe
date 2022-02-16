@@ -7,6 +7,7 @@ ActiveAdmin.register Post do
     column :title
     column :content
     column :created_at
+    column :likes_count
     actions
   end
 

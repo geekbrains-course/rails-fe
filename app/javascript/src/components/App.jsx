@@ -10,9 +10,9 @@ const queryClient = new QueryClient();
 const App = () => {
   return <QueryClientProvider client={queryClient}>
             <BrowserRouter>
-              <Route exact path="/" component={PostsList} />
+              {/* <Route exact path="/" component={PostsList} /> */}
               <Route exact path="/posts/:id([0-9]+)" component={Post} />
-              <Route exact path="/posts" component={PostsList} />
+              {/* <Route exact path="/posts" component={PostsList} /> */}
             </BrowserRouter>
          </QueryClientProvider>
 }

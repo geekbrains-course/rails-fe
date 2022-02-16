@@ -1,0 +1,7 @@
+- @posts.each do |post|
+  %div{class: 'container-fluid post'}
+    %div
+      %h2
+        = link_to post.title, post, class: 'link-dark',  data: { turbolinks: false }
+    %div
+      = post.content
