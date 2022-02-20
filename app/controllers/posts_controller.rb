@@ -27,6 +27,7 @@ class PostsController < ApplicationController
       if @post.save
         format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
+        ActionCable.server.broadcast "notifications_channel", { level: "success", message: "New Post Published!" }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }

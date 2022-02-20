@@ -35,10 +35,13 @@ gem 'bootstrap', '~> 5.1.3'
 gem 'haml-rails', '~> 2.0'
 gem 'image_processing', '~> 1.2'
 
+gem "anycable-rails", "~> 1.1"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
+  gem 'foreman'
 end
 
 group :development do
